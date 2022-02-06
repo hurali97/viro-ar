@@ -7,7 +7,6 @@ import {
   ViroAnimations,
   ViroMaterials,
   ViroSpotLight,
-  ViroQuad,
   Viro3DObject,
   ViroNode,
   ViroSphere,
@@ -78,7 +77,7 @@ const CarModel = (props: CarModelProps) => {
   const [playAnim, setPlayAnim] = React.useState<Boolean>(false);
   const [tapWhite, setTapWhite] = React.useState<Boolean>(false);
   const [tapBlue, setTapBlue] = React.useState<Boolean>(false);
-  const [animName, setAnimName] = React.useState<String>('scaleUp');
+  const [animName, setAnimName] = React.useState<String>('');
   const [texture, setTexture] = React.useState<String>('white');
 
   const _onAnchorFound = useCallback(() => {
@@ -171,13 +170,13 @@ const CarModel = (props: CarModelProps) => {
           shadowOpacity={0.7}
         />
 
-        <ViroQuad
+        {/* <ViroQuad
           rotation={[-90, 0, 0]}
           position={[0, -0.001, 0]}
           width={2.5}
           height={2.5}
           arShadowReceiver={true}
-        />
+        /> */}
       </ViroARImageMarker>
     </ViroARScene>
   );
