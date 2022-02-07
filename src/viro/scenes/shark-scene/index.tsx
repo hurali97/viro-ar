@@ -15,7 +15,7 @@ import {
   ViroParticleEmitter,
   ViroPolyline,
   ViroBox,
-  ViroOmniLight,
+  ViroController,
 } from '@viro-community/react-viro';
 
 interface SharkSceneProps {}
@@ -65,9 +65,12 @@ ViroMaterials.createMaterials({
 
 const SharkScene = (props: SharkSceneProps) => {
   const [animateObject, setAnimateObject] = useState(false);
+  const [startFiring, setStartFiring] = useState(false);
   const [imagePosition, setImagePosition] = useState({x: 0, y: 0, z: 0});
+  const [canons, setCanons] = useState([]);
 
   const _ref = useRef();
+  const fire_ref = useRef();
 
   const _onAnchorFound = useCallback(e => {
     setAnimateObject(true);
@@ -78,11 +81,21 @@ const SharkScene = (props: SharkSceneProps) => {
     });
   }, []);
 
+  const onGunClick = useCallback(() => {
+    setCanons([...canons, Math.random()]);
+    fire_ref?.current?.setNativeProps({run: true});
+
+    setTimeout(() => {
+      fire_ref?.current?.setNativeProps({run: false});
+    }, 2000);
+  }, [canons, fire_ref]);
+
   const renderGun = useCallback((): JSX.Element => {
     return (
       <Viro3DObject
         ref={_ref}
-        position={[imagePosition.x, 0, imagePosition.z]}
+        // position={[imagePosition.x, 0, imagePosition.z]}
+        position={[0.3, 0, 0]}
         scalePivot={[0, 0, 0]}
         scale={[0, 0, 0]}
         source={require('./res/gun.obj')}
@@ -92,15 +105,17 @@ const SharkScene = (props: SharkSceneProps) => {
           name: 'scaleShark',
           run: animateObject,
         }}
+        onClick={onGunClick}
       />
     );
-  }, [animateObject, imagePosition]);
+  }, [animateObject, imagePosition, canons]);
 
   const renderGoblin = useCallback((): JSX.Element => {
     return (
       <Viro3DObject
         ref={_ref}
-        position={[imagePosition.x, 0, imagePosition.z]}
+        // position={[imagePosition.x, 0, imagePosition.z]}
+        position={[0, 0, 0]}
         scalePivot={[0, 0, 0]}
         scale={[0.001, 0.001, 0.001]}
         source={require('./res/goblin.vrx')}
@@ -115,6 +130,33 @@ const SharkScene = (props: SharkSceneProps) => {
       />
     );
   }, [animateObject, imagePosition]);
+
+  const renderFireBalls = useCallback(() => {
+    return canons.map((item, index) => {
+      return (
+        <ViroSphere
+          key={item}
+          // position={[0.3, 0.05, -0.1]}
+          position={[0.3, 0.08, -0.18]}
+          heightSegmentCount={20}
+          widthSegmentCount={20}
+          radius={0.03}
+          physicsBody={{
+            type: 'Dynamic',
+            mass: 0.07,
+            force: {value: [0, 0.3, -3], position: [0, 0.3, -3]},
+            torque: [0, 30, 0],
+            shape: {
+              type: 'Sphere',
+              params: [0.03],
+            },
+            useGravity: true,
+          }}
+          viroTag={'FireBall' + index}
+        />
+      );
+    });
+  }, [canons]);
 
   return (
     <ViroARScene>
@@ -132,7 +174,74 @@ const SharkScene = (props: SharkSceneProps) => {
         target={'shark'}
         pauseUpdates={true}
         onAnchorFound={_onAnchorFound}>
-        {renderGoblin()}
+        <ViroNode
+          visible={animateObject}
+          position={[imagePosition.x, 0, imagePosition.z]}>
+          {renderGoblin()}
+          {renderGun()}
+          {renderFireBalls()}
+          <ViroParticleEmitter
+            ref={fire_ref}
+            position={[0.3, 0.08, -0.18]}
+            duration={2000}
+            visible={animateObject}
+            delay={0}
+            run={startFiring}
+            loop={true}
+            fixedToEmitter={true}
+            image={{
+              source: require('./res/particle_fire.png'),
+              height: 0.02,
+              width: 0.02,
+              bloomThreshold: 1.0,
+            }}
+            spawnBehavior={{
+              particleLifetime: [2000, 2000],
+              emissionRatePerSecond: [100, 100],
+              spawnVolume: {
+                shape: 'box',
+                params: [0.02, 0.02, 0.02],
+                spawnOnSurface: false,
+              },
+              maxParticles: 100,
+            }}
+            particleAppearance={{
+              opacity: {
+                initialRange: [0, 0],
+                factor: 'Time',
+                interpolation: [
+                  {endValue: 1.0, interval: [0, 500]},
+                  {endValue: 0.0, interval: [1000, 2000]},
+                ],
+              },
+              rotation: {
+                initialRange: [0, 360],
+                factor: 'Time',
+                interpolation: [{endValue: 1080, interval: [0, 5000]}],
+              },
+              scale: {
+                initialRange: [
+                  [0.5, 0.5, 0.5],
+                  [0.5, 0.5, 0.5],
+                ],
+                factor: 'Time',
+                interpolation: [
+                  {endValue: [0.5, 0.5, 0.5], interval: [0, 1000]},
+                  {endValue: [0.5, 0.5, 0.5], interval: [3000, 5000]},
+                  {endValue: [0.5, 0.5, 0.5], interval: [4000, 5000]},
+                ],
+              },
+            }}
+            particlePhysics={{
+              velocity: {
+                initialRange: [
+                  [-0.01, 0.01, -0.01],
+                  [0.01, -0.01, 0.01],
+                ],
+              },
+            }}
+          />
+        </ViroNode>
         <ViroParticleEmitter
           position={[imagePosition.x, -0.04, imagePosition.z]}
           duration={2000}
@@ -194,22 +303,6 @@ const SharkScene = (props: SharkSceneProps) => {
             },
           }}
         />
-        {/* <ViroNode
-          scale={[1, 1, 1]}
-        //   transformBehaviors={['billboardY']}
-          >
-        <ViroBox
-         height={0.2}    length={0.2}    width={0.2}  
-            materials={['blue_sphere']}
-            position={[0.02, imagePosition.y, 0]}
-          />
-
-        <ViroBox
-       height={0.2}    length={0.2}    width={0.2}  
-            materials={['blue_sphere']}
-            position={[0.02, -imagePosition.y, 0]}
-          />
-          </ViroNode> */}
       </ViroARImageMarker>
     </ViroARScene>
   );
