@@ -1,9 +1,8 @@
 import * as React from 'react';
 import {ViroARSceneNavigator} from '@viro-community/react-viro';
 
-import CarModel from '../scenes/car-model';
+import CarScene from '../scenes/car-scene';
 import SharkScene from '../scenes/shark-scene';
-import ARPosterDemo from '../scenes/ARPosterDemo/ARPosterDemo';
 
 const ARNavigation = () => {
   return (

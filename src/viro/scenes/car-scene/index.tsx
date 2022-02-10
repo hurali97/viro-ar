@@ -13,7 +13,7 @@ import {
   ViroLightingEnvironment,
 } from '@viro-community/react-viro';
 
-interface CarModelProps {}
+interface CarSceneProps {}
 
 ViroARTrackingTargets.createTargets({
   logo: {
@@ -71,7 +71,7 @@ ViroMaterials.createMaterials({
   },
 });
 
-const CarModel = (props: CarModelProps) => {
+const CarScene = (props: CarSceneProps) => {
   const [pauseUpdates, setPauseUpdates] = React.useState<Boolean>(false);
   const [animateCar, setAnimateCar] = React.useState<Boolean>(false);
   const [playAnim, setPlayAnim] = React.useState<Boolean>(false);
@@ -182,7 +182,7 @@ const CarModel = (props: CarModelProps) => {
   );
 };
 
-export default CarModel;
+export default CarScene;
 
 const styles = StyleSheet.create({
   container: {},
