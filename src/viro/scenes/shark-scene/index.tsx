@@ -1,4 +1,4 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {
   ViroARScene,
@@ -71,6 +71,10 @@ const SharkScene = (props: SharkSceneProps) => {
 
   const _ref = useRef();
   const fire_ref = useRef();
+
+  useEffect(() => {
+    props?.setARNavigation(props?.arSceneNavigator);
+  }, []);
 
   const _onAnchorFound = useCallback(e => {
     setAnimateObject(true);

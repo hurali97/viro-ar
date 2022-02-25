@@ -5,12 +5,13 @@ import CarScene from '../scenes/car-scene';
 import SharkScene from '../scenes/shark-scene';
 import ZombieScene from '../scenes/zombie-scene';
 
-const ARNavigation = () => {
+const ARNavigation = (props) => {
   return (
     <ViroARSceneNavigator
       autofocus={true}
       style={{flex: 1}}
-      initialScene={{scene: ZombieScene}}
+      initialScene={{scene: ZombieScene, passProps: props}}
+      passProps={props}
     />
   );
 };

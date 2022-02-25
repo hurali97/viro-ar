@@ -1,35 +1,28 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {StyleSheet} from 'react-native';
 import {
   ViroARScene,
-  ViroARImageMarker,
-  ViroARTrackingTargets,
-  ViroAnimations,
-  ViroMaterials,
-  ViroSphere,
   Viro3DObject,
-  ViroSpotLight,
-  ViroNode,
   ViroAmbientLight,
-  ViroDirectionalLight,
-  ViroParticleEmitter,
-  ViroPolyline,
-  ViroBox,
   ViroARPlaneSelector,
+  ViroButton,
 } from '@viro-community/react-viro';
 
 interface ZombieSceneProps {}
 
 const ZombieScene = (props: ZombieSceneProps) => {
+  useEffect(() => {
+    props?.setARNavigation(props?.arSceneNavigator);
+  }, []);
+
   return (
-    <ViroARScene>
+    <ViroARScene anchorDetectionTypes="PlanesVertical">
       <ViroAmbientLight color="#ffffff" />
-      <ViroARPlaneSelector>
-        <ViroBox
-          height={0.4}
-          length={0.4}
-          width={0.4}
-          position={[0, 0.25, 0]}
+      <ViroARPlaneSelector alignment="Vertical">
+        <Viro3DObject
+          position={[0, 0, 0]}
+          source={require('./res/Newton.vrx')}
+          type="VRX"
         />
       </ViroARPlaneSelector>
     </ViroARScene>

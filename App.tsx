@@ -19,6 +19,7 @@ import {
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
+import RootNavigation from './src/react/navigation';
 import ARNavigation from './src/viro/navigation';
 
 const App = () => {
@@ -28,7 +29,7 @@ const App = () => {
   //   backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   // };
 
-  return <ARNavigation />;
+  return <RootNavigation />;
 
   // return (
   //   <SafeAreaView style={backgroundStyle}>
