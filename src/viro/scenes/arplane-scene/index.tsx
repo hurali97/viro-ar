@@ -5,12 +5,11 @@ import {
   Viro3DObject,
   ViroAmbientLight,
   ViroARPlaneSelector,
-  ViroButton,
 } from '@viro-community/react-viro';
 
-interface ZombieSceneProps {}
+interface ARPlaneSceneProps {}
 
-const ZombieScene = (props: ZombieSceneProps) => {
+const ARPlaneScene = (props: ARPlaneSceneProps) => {
   useEffect(() => {
     props?.setARNavigation(props?.arSceneNavigator);
   }, []);
@@ -29,7 +28,7 @@ const ZombieScene = (props: ZombieSceneProps) => {
   );
 };
 
-export default ZombieScene;
+export default ARPlaneScene;
 
 const styles = StyleSheet.create({
   container: {},

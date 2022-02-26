@@ -8,7 +8,7 @@ const Stack = createNativeStackNavigator();
 const RootNavigation = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="ARPlaneScreen" component={ARPlaneScreen} />
       </Stack.Navigator>
     </NavigationContainer>

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import ARNavigation from '../../../viro/navigation';
-import SharkScene from '../../../viro/scenes/shark-scene';
-import ZombieScene from '../../../viro/scenes/zombie-scene';
+import ARImageMarkerScene from '../../../viro/scenes/arimage-marker-scene';
+import ARPlaneScene from '../../../viro/scenes/arplane-scene';
 
 interface ARPlaneScreenProps {}
 
@@ -16,7 +16,7 @@ const ARPlaneScreen = (props: ARPlaneScreenProps) => {
   const onScene_1 = () => {
     console.log('arNavigation ', arNavigation);
     arNavigation?.replace({
-      scene: SharkScene,
+      scene: ARImageMarkerScene,
       passProps: getARNavProps(),
     });
   };
@@ -24,7 +24,7 @@ const ARPlaneScreen = (props: ARPlaneScreenProps) => {
   const onScene_2 = () => {
     console.log('arNavigation ', arNavigation);
     arNavigation?.replace({
-      scene: ZombieScene,
+      scene: ARPlaneScene,
       passProps: getARNavProps(),
     });
   };
@@ -40,10 +40,10 @@ const ARPlaneScreen = (props: ARPlaneScreenProps) => {
       {ARNavigation(getARNavProps())}
       <View style={styles.sceneContainer}>
         <TouchableOpacity onPress={onScene_1} style={styles.scene1_btn}>
-          <Text style={styles.btnText}>Shark</Text>
+          <Text style={styles.btnText}>AR Image Marker</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={onScene_2} style={styles.scene2_btn}>
-          <Text style={styles.btnText}>Frame</Text>
+          <Text style={styles.btnText}>AR Plane</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     position: 'absolute',
     bottom: 20,
+    width: '100%',
   },
   scene1_btn: {
     padding: 20,

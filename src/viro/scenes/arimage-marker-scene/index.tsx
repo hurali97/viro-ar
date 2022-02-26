@@ -8,17 +8,13 @@ import {
   ViroMaterials,
   ViroSphere,
   Viro3DObject,
-  ViroSpotLight,
   ViroNode,
   ViroAmbientLight,
   ViroDirectionalLight,
   ViroParticleEmitter,
-  ViroPolyline,
-  ViroBox,
-  ViroController,
 } from '@viro-community/react-viro';
 
-interface SharkSceneProps {}
+interface ARImageMarkerSceneProps {}
 
 ViroARTrackingTargets.createTargets({
   shark: {
@@ -63,7 +59,7 @@ ViroMaterials.createMaterials({
   },
 });
 
-const SharkScene = (props: SharkSceneProps) => {
+const ARImageMarkerScene = (props: ARImageMarkerSceneProps) => {
   const [animateObject, setAnimateObject] = useState(false);
   const [startFiring, setStartFiring] = useState(false);
   const [imagePosition, setImagePosition] = useState({x: 0, y: 0, z: 0});
@@ -312,7 +308,7 @@ const SharkScene = (props: SharkSceneProps) => {
   );
 };
 
-export default SharkScene;
+export default ARImageMarkerScene;
 
 const styles = StyleSheet.create({
   container: {},
