@@ -10,6 +10,9 @@ https://github.com/viromedia/viro/tree/master/code-samples/js
 ### Viro Docs
 https://viro-community.readme.io/docs
 
+### Helpful links
+https://blog.viromedia.com/https-blog-viromedia-com-asset-pipeline-animating-3d-characters-for-ar-vr-arkit-arcore-c7aff566bcf8
+
 ### Troubleshooting
 - If you see any error related to file not found, a potential reason could be you didn't setup asset resolver in metroconfig.js, like so:
 ```sh
